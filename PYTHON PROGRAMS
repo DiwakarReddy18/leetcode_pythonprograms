@@ -1,0 +1,147 @@
+1.TWO SUM :
+class Solution(object):
+    def twoSum(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[int]
+        """
+        num_map = {} 
+        for i, num in enumerate(nums):
+            complement = target - num
+            if complement in num_map:
+                return [num_map[complement], i]
+            num_map[num] = i
+        
+        return []
+2.LONGEST SUBSTRING WITHOUT REPEATING CHARACTERS:
+class Solution(object):
+    def lengthOfLongestSubstring(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        char_index = {}  
+        left = 0         
+        max_len = 0     
+
+        for right, char in enumerate(s):
+            
+            if char in char_index and char_index[char] >= left:
+                left = char_index[char] + 1  
+            
+            char_index[char] = right
+
+            
+            max_len = max(max_len, right - left + 1)
+
+        return max_len
+3.ADD TWO NUMNBERS:
+num1 = float(input("Enter the first number: "))
+num2 = float(input("Enter the second number: "))
+sum = num1 + num2
+print("The sum of", num1, "and", num2, "is:", sum)
+
+4.MEDIAN OF TWO SORTED ARRAYS:
+class Solution(object):
+    def findMedianSortedArrays(self, nums1, nums2):
+        """
+        :type nums1: List[int]
+        :type nums2: List[int]
+        :rtype: float
+        """
+      
+        if len(nums1) > len(nums2):
+            nums1, nums2 = nums2, nums1
+
+        m, n = len(nums1), len(nums2)
+        left, right = 0, m
+
+        while left <= right:
+            i = (left + right) // 2
+            j = (m + n + 1) // 2 - i
+
+            max_left_A = float('-inf') if i == 0 else nums1[i - 1]
+            min_right_A = float('inf') if i == m else nums1[i]
+            max_left_B = float('-inf') if j == 0 else nums2[j - 1]
+            min_right_B = float('inf') if j == n else nums2[j]
+
+            if max_left_A <= min_right_B and max_left_B <= min_right_A:
+              
+                if (m + n) % 2 == 0:
+                    return (max(max_left_A, max_left_B) + min(min_right_A, min_right_B)) / 2.0
+                else:
+                    return float(max(max_left_A, max_left_B))
+            elif max_left_A > min_right_B:
+                right = i - 1
+            else:
+                left = i + 1
+
+5.LONGEST PALINDROMIC SUBSTRING:
+class Solution(object):
+    def longestPalindrome(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        if not s or len(s) == 1:
+            return s
+
+        start, end = 0, 0
+
+        def expand_from_center(left, right):
+            while left >= 0 and right < len(s) and s[left] == s[right]:
+                left -= 1
+                right += 1
+            return left + 1, right - 1 
+
+        for i in range(len(s)):
+            
+            l1, r1 = expand_from_center(i, i)
+       
+            l2, r2 = expand_from_center(i, i + 1)
+
+            
+            if r1 - l1 > end - start:
+                start, end = l1, r1
+            if r2 - l2 > end - start:
+                start, end = l2, r2
+
+        return s[start:end + 1]
+6.REVERSE INTEGER:
+class Solution(object):
+    def reverse(self, x):
+        """
+        :type x: int
+        :rtype: int
+        """
+        INT_MAX = 2**31 - 1  
+        INT_MIN = -2**31    
+
+        sign = -1 if x < 0 else 1
+        x_abs = abs(x)
+        reversed_num = int(str(x_abs)[::-1]) * sign
+
+       
+        if reversed_num < INT_MIN or reversed_num > INT_MAX:
+            return 0
+
+        return reversed_num
+7.PALINDROME:
+class Solution(object):
+    def isPalindrome(self, x):
+        """
+        :type x: int
+        :rtype: bool
+        """
+       
+        if x < 0 or (x % 10 == 0 and x != 0):
+            return False
+
+        reversed_half = 0
+        while x > reversed_half:
+            reversed_half = reversed_half * 10 + x % 10
+            x //= 10
+
+       
+        return x == reversed_half or x == reversed_half // 10

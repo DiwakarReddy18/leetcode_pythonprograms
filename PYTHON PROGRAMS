@@ -1,19 +1,12 @@
 1.TWO SUM :
-class Solution(object):
-    def twoSum(self, nums, target):
-        """
-        :type nums: List[int]
-        :type target: int
-        :rtype: List[int]
-        """
-        num_map = {} 
-        for i, num in enumerate(nums):
-            complement = target - num
-            if complement in num_map:
-                return [num_map[complement], i]
-            num_map[num] = i
-        
-        return []
+def twosums(nums,target):
+    for i in range(len(nums)):
+        for j in range(i+1,len(nums)):
+            if nums[i]+nums[j]==target:
+                return i,j
+print(twosums([2,7,11,15],9))
+output:(0,1)
+
 2.LONGEST SUBSTRING WITHOUT REPEATING CHARACTERS:
 class Solution(object):
     def lengthOfLongestSubstring(self, s):

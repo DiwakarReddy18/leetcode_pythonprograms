@@ -1,0 +1,12 @@
+def palindrome(n):
+    org=n
+    rev=0
+    while n>0:
+        rem=n%10
+        rev=rev*10+rem
+        n=n//10
+    if rev==org:
+        return"palindrome"
+    else:
+        return"not a palindrome"
+print(palindrome(int(input())))
